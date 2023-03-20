@@ -10,6 +10,7 @@ Die nachstehende Dokumentation zeigt alle Schritte auf, die es zur Einrichtung e
 * 03 - VirtualBox
 * 04 - Vagrant
 * 05 - Packer
+* 06 - LB2
 * 10 - Fazit
 
 ---
@@ -122,6 +123,44 @@ Packer funktioniert ähnlich wie vagrant, kümmert sich aber um die Erstellung v
 
 ![Packer-version](./Bilder/Packer-Version.png)
 
+
+06 - AWS
+======
+
+> [⇧ **Nach oben**](#inhaltsverzeichnis)
+
+Verbindung mit AWS in Vagrant
+
+Vagrant kann mit verschiedenen Cloud Providern verbunden werden, einschließlich AWS von Amazon. Um AWS mit Vagrant zu nutzen, müssen Sie das vagrant-aws Plugin installieren und die dummy Box lokal hinzufügen:
+
+```
+vagrant plugin install vagrant-aws
+```
+```
+$ vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+```
+
+### AWS vorbereiten
+
+01. Falls Sie noch keinen Amazon-Stammbenutzer haben, öffnen Sie die AWS-Website und erstellen Sie einen.
+02. Um die schnellste Verbindung zu erhalten, ändern Sie den Rechenzentrum-Standort auf Frankfurt. Sie sollten jedoch berücksichtigen, dass sich dieser je nach Bedarf ändern kann.
+03. Erstellen Sie einen AWS-Benutzer, mit dem Vagrant auf "EC2" zugreifen kann.
+04. Klicken Sie auf den Benutzernamen oben rechts und dann auf „Sicherheitsanmeldeinformationen“.
+05. Erstellen Sie einen neuen Benutzer mit dem Namen „vagrant“ durch Klicken auf „Benutzer“.
+06. Verwenden Sie die „Berechtigungsrichtlinie“ „AmazonEC2FullAccess“ für diesen Benutzer.
+07. "Frankfurt" als Rechenzentrum ausgewählt ist.
+08. Erstellen Sie eine Sicherheitsgruppe, die den VM-Port 22 und 80 zulässt.
+09. Schaffen Sie ein Schlüsselpaar und speichern Sie es.pem-Datei in der Hauptverzeichnisse
+
+Hier wäre noch die Grafische erklärung mit Hilfe von Bildern.
+
+![Bildanleitung für AWS](./Bilder/AWS-1.png)
+![Bildanleitung für AWS](./Bilder/AWS-2.png)
+![Bildanleitung für AWS](./Bilder/AWS-3.png)
+![Bildanleitung für AWS](./Bilder/AWS-4.png)
+![Bildanleitung für AWS](./Bilder/AWS-5.png)
+
+Man musste auch noch das Vagrantfile bearbeiten und man musste auch noch den Zugriffsschlüssel mit angeben. Zudem auch noch das .pem-Zertifikat und noch einige weitere Angaben.
 
 10 - Fazit
 ======
