@@ -161,3 +161,4 @@ Hier wäre noch die Grafische erklärung mit Hilfe von Bildern.
 ![Bildanleitung für AWS](./Bilder/AWS-5.png)
 
 Man musste auch noch das Vagrantfile bearbeiten und man musste auch noch den Zugriffsschlüssel mit angeben. Zudem auch noch das .pem-Zertifikat und noch einige weitere Angaben.
+

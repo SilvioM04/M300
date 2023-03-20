@@ -34,9 +34,39 @@ $ vagrant status # Status der VM wird angezeigt
 $ vagrant destroy # Die VM wird endgültig gelöscht
 ´´´
 
+### Vagrantfile
 
+Hier noch ein kleines Beispiel wie ein Vagrantfile aussehen könnte.
 
+´´´
+Vagrant.configure("2") do |config|
+  config.vm.define :firewall do |firewall|
+      firewall.vm.box = "ubuntu/xenial64"
+      firewall.vm.network :private_network, ip: "10.0.0.10"
+      firewall.vm.hostname = "Firewall"
+      firewall.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      sudo apt-get install ufw
+      sudo ufw allow 80/tcp
+      sudo ufw allow from 10.0.2.2 to any port 22
+      sudo ufw allow from 10.0.0.20 to any port 3306
+      sudo ufw --force enable
+      SHELL
+  end
 
+config.vm.define :web do |web|
+      web.vm.box = "ubuntu/xenial64"
+      web.vm.network :private_network, ip: "10.0.0.20"
+      web.vm.hostname = "web"
+      web.vm.network "forwarded_port", guest:80, host:8090, auto_correct: true
+      web.vm.synced_folder "html/", "/var/www/html"
+      web.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get update
+      sudo apt-get -y install apache2 
+      SHELL
+  end
+end
+´´´
 
 
 ### Wissenstand
@@ -61,7 +91,7 @@ Secure Shell (SSH) ist ein Protokoll, das verwendet wird, um sich sicher mit ein
 
 ### Reflexion
 
-Für mich ist dieses Modul sehr spannend doch ich komme nicht so schnell voran wie andere. Mir macht es jedoch sehr grossen Spass. Am Anfang des Modules habe ich mich leider nicht genügend konzentriert und dachte ich bekommen dies schon hin, doch schon sehr schnell bemerkte ich das ich mehr machen muss. Als mir das klar wurde was es schon fast zu spät und ich bereue dies im nachhinein auch ein bisschen. Ich möchte mich diese Woche noch ins Zeug legen damit ich vielleicht noch ein paar Punkte dazu bekommen kann für die LB2. Ich werde mich die nächsten 3 Tage noch intensiv mit der LB2 beschäftigen bis ich zufrieden bin und danach dann für die LB3, damit ich nicht mehr den gleichen Fehler mache. Für mich war dieses Modul bis jetzt jedoch sehr spannend und ich konnte sehr viel neues lernen. Da ich in meinem Team bei der Arbeit mit Container mit OpenShift arbeite möchte ich mich umso mehr ins Zeug legen. Bei den Arbeiten ging am Anfang alles sehr gut doch dann kamen einige Fehler und dadurch hatte ich sehr viel Zeit verloren. Als es dann mit Vagrant und weiterem angefangen hat hatte ich gemerkt das man sich für das Thema sehr informieren muss damit man versteht was gemacht werden muss. Bei Packer hatte ich auch einige Probleme und konnten es am Schluss leider auch nicht beheben, noch dazu kam auch noch das ich ein neues Repository machen musste, da ich das packer.exe File im Repository gespeichert hatte. Dadurch war das Repository zu gross und ich konnte es nicht mehr auf Git pushen. Durch das löschen des packer.exe File wurde dies auch nicht behoben und darum musste ich ein ganz neues Repository erstellen. Ich hatte dadurch sehr viel Zeit verloren und konnte die letzte Woche leider nicht aufarbeiten aufgrun meiner Gesundheit und bin dadurch auch nicht weitergekommen und muss dies diese Woche nachholen, auch wenn es mir keine Punkte bringt ich möchte dies lernen da es in der Zukunft wichtig sein könnte. Ich möchte auch weitermachen können, da das nächste Thema sehr interessant für mich ist. 
+Für mich ist dieses Modul sehr spannend doch ich komme nicht so schnell voran wie andere. Mir macht es jedoch sehr grossen Spass. Am Anfang des Modules habe ich mich leider nicht genügend konzentriert und dachte ich bekommen dies schon hin, doch schon sehr schnell bemerkte ich das ich mehr machen muss. Als mir das klar wurde was es schon fast zu spät und ich bereue dies im nachhinein auch ein bisschen. Ich möchte mich diese Woche noch ins Zeug legen damit ich vielleicht noch ein paar Punkte dazu bekommen kann für die LB2. Ich werde mich die nächsten 3 Tage noch intensiv mit der LB2 beschäftigen bis ich zufrieden bin und danach dann für die LB3, damit ich nicht mehr den gleichen Fehler mache. Für mich war dieses Modul bis jetzt jedoch sehr spannend und ich konnte sehr viel neues lernen. Da ich in meinem Team bei der Arbeit mit Container mit OpenShift arbeite möchte ich mich umso mehr ins Zeug legen. Bei den Arbeiten ging am Anfang alles sehr gut doch dann kamen einige Fehler und dadurch hatte ich sehr viel Zeit verloren. Als es dann mit Vagrant und weiterem angefangen hat hatte ich gemerkt das man sich für das Thema sehr informieren muss damit man versteht was gemacht werden muss. Bei Packer hatte ich auch einige Probleme und konnten es am Schluss leider auch nicht beheben, noch dazu kam auch noch das ich ein neues Repository machen musste, da ich das packer.exe File im Repository gespeichert hatte. Dadurch war das Repository zu gross und ich konnte es nicht mehr auf Git pushen. Durch das löschen des packer.exe File wurde dies auch nicht behoben und darum musste ich ein ganz neues Repository erstellen. Ich hatte dadurch sehr viel Zeit verloren und konnte die letzte Woche leider nicht aufarbeiten aufgrun meiner Gesundheit und bin dadurch auch nicht weitergekommen (hatte leider nur am Wochende Zeit um dies mit meinen Schulkollegen anzuschauen, doch dies hat schon sehr viel gebracht) und muss dies diese Woche nachholen, auch wenn es mir keine Punkte bringt ich möchte dies lernen da es in der Zukunft wichtig sein könnte. Ich möchte auch weitermachen können, da das nächste Thema sehr interessant für mich ist. Ich konnte mit Hilfe von meinen Teamkollegen einiges aufholen, doch es funktionierte leider noch nicht alles. Ich konnte mir zum Glück schon gedanken machen was ich noch für die LB2 machen möchte und kann dies bald auch schon umsetzten. Für mich war dieses Modul aber ein sehr Informationreiches und stressiges Modul, doch es hat mir sehr veil spass gemacht.
 
 
 
